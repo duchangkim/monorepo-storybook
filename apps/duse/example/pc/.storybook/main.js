@@ -1,11 +1,17 @@
-const rootMain = require('../../../../../../../../.storybook/main');
+const rootMain = require('../../../../../.storybook/main');
 
 module.exports = {
   ...rootMain,
 
   core: { ...rootMain.core, builder: 'webpack5' },
 
-  stories: [...rootMain.stories, '../src/lib/**/*.stories.mdx', '../src/lib/**/*.stories.@(js|jsx|ts|tsx)'],
+  stories: [
+    ...rootMain.stories,
+    '../src/app/**/*.stories.mdx',
+    '../src/app/**/*.stories.@(js|jsx|ts|tsx)',
+    '../../../../../libs/projects/duse/example/pc/**/*.stories.mdx',
+    '../../../../../libs/projects/duse/example/pc/**/*.stories.@(js|jsx|ts|tsx)',
+  ],
   addons: [...rootMain.addons, '@nrwl/react/plugins/storybook'],
   webpackFinal: async (config, { configType }) => {
     // apply any global webpack configs that might have been specified in .storybook/main.js
