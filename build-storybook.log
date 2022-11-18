@@ -1,0 +1,51 @@
+
+ >  NX   Affected criteria defaulted to --base=main --head=HEAD
+
+
+ >  NX   Running target build-storybook for 2 project(s):
+
+    - projects-duse-example-pc-ui-sample-badge
+    - projects-duse-example-pc-ui-sample
+   
+   With additional flags:
+     --output-dir=/var/folders/hz/lm57wtr97m7gkh1t369nqw1r0000gn/T/chromatic--55788-3cU08xOY2RYs
+
+ 
+
+> nx run projects-duse-example-pc-ui-sample-badge:build-storybook --output-dir /var/folders/hz/lm57wtr97m7gkh1t369nqw1r0000gn/T/chromatic--55788-3cU08xOY2RYs
+
+
+>  NX  ui framework: @storybook/react
+
+
+>  NX  Storybook builder starting ...
+
+=> Loading Nrwl React Storybook preset from "@nrwl/react/plugins/storybook"
+
+>  NX  Storybook builder finished ...
+
+
+>  NX  Storybook files available in dist/storybook/projects-duse-example-pc-ui-sample-badge
+
+
+> nx run projects-duse-example-pc-ui-sample:build-storybook --output-dir /var/folders/hz/lm57wtr97m7gkh1t369nqw1r0000gn/T/chromatic--55788-3cU08xOY2RYs
+
+
+>  NX  ui framework: @storybook/react
+
+
+>  NX  Storybook builder starting ...
+
+=> Loading Nrwl React Storybook preset from "@nrwl/react/plugins/storybook"
+
+>  NX  Storybook builder finished ...
+
+
+>  NX  Storybook files available in dist/storybook/projects-duse-example-pc-ui-sample
+
+
+ 
+
+ >  NX   Successfully ran target build-storybook for 2 projects
+
+

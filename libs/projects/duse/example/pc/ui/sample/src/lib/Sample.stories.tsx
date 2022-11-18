@@ -3,7 +3,7 @@ import { Sample } from './Sample';
 
 const Story: ComponentMeta<typeof Sample> = {
   component: Sample,
-  title: 'Sample',
+  title: 'shared/ui/Sample',
 };
 export default Story;
 

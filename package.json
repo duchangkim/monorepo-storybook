@@ -1,8 +1,7 @@
 {
-  "name": "duse",
-  "description": "두꺼비세상 웹 서비스 모노레포",
+  "name": "monorepo-storybook",
+  "description": "모노레포 스토리북 테스트",
   "version": "0.0.0",
-  "author": "duse-corp",
   "license": "MIT",
   "private": true,
   "engines": {
@@ -16,7 +15,9 @@
     "build:dev": "nx run-many --target=build --configuration=development",
     "build:prod": "nx run-many --target=build --configuration=production",
     "graph": "nx graph",
-    "bootstrap": "lerna bootstrap"
+    "bootstrap": "lerna bootstrap",
+    "build-storybook": "nx affected --target=build-storybook",
+    "chromatic": "npx chromatic --project-token=d712a34106a1"
   },
   "devDependencies": {
     "@babel/core": "7.12.13",
@@ -53,7 +54,8 @@
     "@typescript-eslint/eslint-plugin": "^5.38.1",
     "@typescript-eslint/parser": "^5.38.1",
     "babel-jest": "^29.3.1",
-    "babel-loader": "8.1.0",
+    "babel-loader": "9.1.0",
+    "chromatic": "^6.11.4",
     "cypress": "^10.7.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.5.0",
@@ -85,5 +87,7 @@
     "react-router-dom": "6.4.1",
     "regenerator-runtime": "^0.13.9",
     "tslib": "^2.3.0"
-  }
+  },
+  "readme": "ERROR: No README data found!",
+  "_id": "monorepo-storybook@0.0.0"
 }
