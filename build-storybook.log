@@ -1,15 +1,14 @@
 
- >  NX   Running target build-storybook for 2 project(s):
+ >  NX   Running target build-storybook for 1 project(s):
 
-    - projects-duse-example-pc-ui-sample
-    - projects-duse-example-pc-ui-sample-badge
+    - duse-example-pc
    
    With additional flags:
-     --output-dir=/var/folders/hz/lm57wtr97m7gkh1t369nqw1r0000gn/T/chromatic--57997-ZgYmBui2vSW5
+     --output-dir=/var/folders/hz/lm57wtr97m7gkh1t369nqw1r0000gn/T/chromatic--66427-Ugg5Bze1IZyr
 
  
 
-> nx run projects-duse-example-pc-ui-sample-badge:build-storybook --output-dir /var/folders/hz/lm57wtr97m7gkh1t369nqw1r0000gn/T/chromatic--57997-ZgYmBui2vSW5
+> nx run duse-example-pc:build-storybook --output-dir /var/folders/hz/lm57wtr97m7gkh1t369nqw1r0000gn/T/chromatic--66427-Ugg5Bze1IZyr
 
 
 >  NX  ui framework: @storybook/react
@@ -22,27 +21,11 @@
 >  NX  Storybook builder finished ...
 
 
->  NX  Storybook files available in dist/storybook/projects-duse-example-pc-ui-sample-badge
-
-
-> nx run projects-duse-example-pc-ui-sample:build-storybook --output-dir /var/folders/hz/lm57wtr97m7gkh1t369nqw1r0000gn/T/chromatic--57997-ZgYmBui2vSW5
-
-
->  NX  ui framework: @storybook/react
-
-
->  NX  Storybook builder starting ...
-
-=> Loading Nrwl React Storybook preset from "@nrwl/react/plugins/storybook"
-
->  NX  Storybook builder finished ...
-
-
->  NX  Storybook files available in dist/storybook/projects-duse-example-pc-ui-sample
+>  NX  Storybook files available in dist/storybook/duse-example-pc
 
 
  
 
- >  NX   Successfully ran target build-storybook for 2 projects
+ >  NX   Successfully ran target build-storybook for 1 projects
 
 
