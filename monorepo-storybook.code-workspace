@@ -1,0 +1,40 @@
+{
+  "folders": [
+    {
+      "name": "root",
+      "path": "."
+    },
+    {
+      "name": "[lib] plugin",
+      "path": "libs/plugin"
+    },
+    {
+      "name": "[lib] core/domain",
+      "path": "libs/shared/core/domain"
+    },
+    {
+      "name": "[lib] core/repository",
+      "path": "libs/shared/core/repository"
+    },
+    {
+      "name": "[lib] core/di",
+      "path": "libs/shared/core/di"
+    },
+    {
+      "name": "[lib] shared",
+      "path": "libs/shared",
+    },
+    {
+      "name": "[app] duse-example",
+      "path": "apps/duse/example"
+    },
+    {
+      "name": "[lib] duse-example-pc",
+      "path": "libs/projects/duse/example/pc"
+    }
+  ],
+  "settings": {
+    "typescript.preferences.importModuleSpecifier": "project-relative",
+    "typescript.preferences.quoteStyle": "single"
+  }
+}

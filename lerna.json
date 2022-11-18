@@ -1,0 +1,6 @@
+{
+  "packages": ["libs/*", "apps/*"],
+  "useNx": true,
+  "version": "0.0.0",
+  "npmClient": "npm"
+}

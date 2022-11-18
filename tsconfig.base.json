@@ -1,0 +1,40 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "noUnusedLocals": false,
+    "paths": {
+      "@duse/projects/duse/example/pc/constant": ["libs/projects/duse/example/pc/constant/src/index.ts"],
+      "@duse/projects/duse/example/pc/features/auth": ["libs/projects/duse/example/pc/features/auth/src/index.ts"],
+      "@duse/projects/duse/example/pc/pages/login": ["libs/projects/duse/example/pc/pages/login/src/index.ts"],
+      "@duse/projects/duse/example/pc/service": ["libs/projects/duse/example/pc/service/src/index.ts"],
+      "@duse/projects/duse/example/pc/ui/login-form": ["libs/projects/duse/example/pc/ui/login-form/src/index.ts"],
+      "@duse/projects/duse/example/pc/ui/sample": ["libs/projects/duse/example/pc/ui/sample/src/index.ts"],
+      "@duse/projects/duse/example/pc/util": ["libs/projects/duse/example/pc/util/src/index.ts"],
+      "@duse/react": ["libs/plugin/react/src/index.ts"],
+      "@duse/shared/constant/*": ["libs/shared/constant/src/*"],
+      "@duse/shared/core/di": ["libs/shared/core/di/src/index.ts"],
+      "@duse/shared/core/domain": ["libs/shared/core/domain/src/index.ts"],
+      "@duse/shared/core/repository": ["libs/shared/core/repository/src/index.ts"],
+      "@duse/shared/hook": ["libs/shared/hook/src/index.ts"],
+      "@duse/shared/service/api-service": ["libs/shared/service/api-service/src/index.ts"],
+      "@duse/shared/service/local-storage-service": ["libs/shared/service/local-storage-service/src/index.ts"],
+      "@duse/shared/type": ["libs/shared/type/src/index.ts"],
+      "@duse/shared/util": ["libs/shared/util/src/index.ts"],
+      "@duse/workspace": ["libs/plugin/workspace/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp", "dist"]
+}

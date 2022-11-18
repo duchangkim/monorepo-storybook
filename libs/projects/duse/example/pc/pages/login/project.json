@@ -1,0 +1,24 @@
+{
+  "name": "projects-duse-example-pc-pages-login",
+  "$schema": "../../../../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/projects/duse/example/pc/pages/login/src",
+  "projectType": "library",
+  "tags": ["type:feature"],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/projects/duse/example/pc/pages/login/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/projects/duse/example/pc/pages/login"],
+      "options": {
+        "jestConfig": "libs/projects/duse/example/pc/pages/login/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

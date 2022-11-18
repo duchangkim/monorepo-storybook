@@ -1,0 +1,179 @@
+name: Deploy workflow
+
+on:
+  push:
+    paths-ignore:
+      - '*.md'
+      - 'docs/**'
+    branches:
+      - main
+      - develop
+
+env:
+  AWS_REGION: ap-northeast-2
+  NODE_MODULES_CACHE_PAHT: node_modules
+  NODE_MODULES_CACHE_NAME: cache-node-modules
+  DUSE_WEB_ARTIFACT_NAME: duse-web-artifact
+  DUSE_WEB_ARTIFACT_PATH: dist/
+  NODE_VERSION: 18.12.1
+  BUILD_ENV: ${{ github.ref == 'refs/heads/main' && 'production' || 'development'}}
+  # SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+jobs:
+  check-affected:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      affected_apps: ${{ steps.get-affected-apps-string.outputs.affected_apps }}
+      matrix: ${{ steps.get-affected-apps.outputs.matrix }}
+      node_modules_cache_key: ${{ steps.set-cache-key.outputs.node_modules_cache_key }}
+      base: ${{ steps.set-SHA.outputs.base }}
+      executes_build_and_deploy: ${{ steps.get-affected-apps-string.outputs.executes_build_and_deploy }}
+
+    steps:
+      - name: Echo env vars through context
+        run: |
+          echo "$GITHUB_CONTEXT"
+
+      - name: Checkout source
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Compute cache key
+        id: set-cache-key
+        run: echo "node_modules_cache_key=${{ runner.os }}-build-${{ env.NODE_MODULES_CACHE_NAME }}-${{ hashFiles('**/package-lock.json') }}" >> $GITHUB_OUTPUT
+
+      - name: Cache node modules
+        id: cache-npm
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.NODE_MODULES_CACHE_PAHT }}
+          key: ${{ steps.set-cache-key.outputs.node_modules_cache_key }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.NODE_MODULES_CACHE_NAME }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Install dependencies
+        if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        run: npm ci
+
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        id: set-SHA
+        uses: nrwl/nx-set-shas@v3
+
+      - name: Get affected apps string
+        id: get-affected-apps-string
+        run: |
+          command_result=$(./node_modules/.bin/nx print-affected --type=app --select=projects)
+          if [[ $command_result == "" ]]; then
+            echo "executes_build_and_deploy=false" >> $GITHUB_OUTPUT 
+            echo "affected_apps=false" >> $GITHUB_OUTPUT
+          else
+            echo "executes_build_and_deploy=true" >> $GITHUB_OUTPUT 
+            echo "affected_apps=${command_result}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Get affected apps (Get filtered deploymentEnvironmentPresets.json)
+        if: ${{ steps.get-affected-apps-string.outputs.executes_build_and_deploy == 'true' }}
+        id: get-affected-apps
+        run: |
+          includes=$(jq --arg affected_apps "${{ steps.get-affected-apps-string.outputs.affected_apps }}" 'map(. | select(.projectName | inside($affected_apps)))' deploymentEnvironmentPresets.json)
+          echo "matrix={\"include\":$(echo $includes)}" >> $GITHUB_OUTPUT
+
+  build-and-upload-artifact:
+    runs-on: ubuntu-latest
+    needs: check-affected
+    timeout-minutes: 10
+    if: ${{ needs.check-affected.outputs.executes_build_and_deploy == 'true' }}
+
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.check-affected.outputs.matrix) }}
+
+    steps:
+      - name: Echo env vars through context
+        run: |
+          echo "$GITHUB_CONTEXT"
+
+      - name: Checkout source
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Cache node modules
+        uses: actions/cache@v3
+        id: cache-npm
+        with:
+          path: ${{ env.NODE_MODULES_CACHE_PAHT }}
+          key: ${{ needs.check-affected.outputs.node_modules_cache_key }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.NODE_MODULES_CACHE_NAME }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Install dependencies
+        if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        run: npm ci
+
+      - name: Building apps
+        run: npx nx affected --target=build --configuration=${{ env.BUILD_ENV }} --base=${{ needs.check-affected.outputs.base }}
+
+      - name: Saving build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.projectName }}
+          path: ${{ matrix.artifactPath }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [check-affected, build-and-upload-artifact]
+    timeout-minutes: 10
+    if: ${{ needs.check-affected.outputs.executes_build_and_deploy == 'true' }}
+
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.check-affected.outputs.matrix) }}
+
+    steps:
+      - name: Echo env vars through context
+        run: |
+          echo "$GITHUB_CONTEXT"
+
+      - uses: actions/checkout@v3
+
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ matrix.projectName }}
+          path: ${{ matrix.artifactPath }}
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Sync production S3
+        if: ${{ env.BUILD_ENV == 'production' }}
+        run: aws s3 sync ${{ matrix.artifactPath }} s3://${{ matrix.bucketName }} --region ${{ env.AWS_REGION }}
+
+      - name: Sync development S3
+        if: ${{ env.BUILD_ENV == 'development' }}
+        run: aws s3 sync ${{ matrix.artifactPath }} s3://${{ matrix.developmentBucketName }} --region ${{ env.AWS_REGION }}
+
+      - name: Notify success
+        if: ${{ success() }}
+        run: echo "The job has succeeded ${{ matrix.projectName }} -> 슬랙 알림 또는 기타 알림으로 전송할 수 있다."

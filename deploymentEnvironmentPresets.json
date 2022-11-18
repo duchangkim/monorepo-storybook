@@ -1,0 +1,14 @@
+[
+  {
+    "projectName": "duse-example-pc",
+    "artifactPath": "dist/apps/duse/example/pc",
+    "bucketName": "my-react-pc-app",
+    "developmentBucketName": ""
+  },
+  {
+    "projectName": "duse-example-mobile",
+    "artifactPath": "dist/apps/duse/example/mobile",
+    "bucketName": "my-react-mobile-app",
+    "developmentBucketName": ""
+  }
+]

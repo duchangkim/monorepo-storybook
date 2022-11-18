@@ -1,0 +1,24 @@
+{
+  "name": "projects-duse-example-pc-util",
+  "$schema": "../../../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/projects/duse/example/pc/util/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/projects/duse/example/pc/util/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/projects/duse/example/pc/util"],
+      "options": {
+        "jestConfig": "libs/projects/duse/example/pc/util/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["type:util"]
+}

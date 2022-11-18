@@ -1,0 +1,27 @@
+{
+  "name": "projects-duse-example-pc-store",
+  "$schema": "../../../../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/projects/duse/example/pc/store/src",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "fix": true,
+        "cache": true,
+        "eslintConfig": "libs/projects/duse/example/pc/store/.eslintrc.json",
+        "lintFilePatterns": ["libs/projects/duse/example/pc/store/**/*.{ts,json}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/projects/duse/example/pc/store"],
+      "options": {
+        "jestConfig": "libs/projects/duse/example/pc/store/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["type:service"]
+}

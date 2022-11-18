@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "plugin-react",
+  "version": "0.0.1",
+  "generators": {
+    "library": {
+      "factory": "./src/generators/library/generator",
+      "schema": "./src/generators/library/schema.json",
+      "description": "react library generator. 특정 프로젝트(application)에서 사용되는 React 라이브러리를 만들 때 사용합니다."
+    }
+  }
+}

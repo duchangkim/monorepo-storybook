@@ -1,0 +1,90 @@
+{
+  "name": "duse-example-pc",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/duse/example/pc/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/duse/example/pc",
+        "index": "apps/duse/example/pc/src/public/index.html",
+        "baseHref": "/",
+        "main": "apps/duse/example/pc/src/index.tsx",
+        "polyfills": "apps/duse/example/pc/src/polyfills.ts",
+        "tsConfig": "apps/duse/example/pc/tsconfig.app.json",
+        "assets": [
+          {
+            "input": "apps/duse/example/pc/src/public/static",
+            "glob": "**/*",
+            "output": "static"
+          }
+        ],
+        "scripts": [],
+        "webpackConfig": "apps/duse/example/pc/config/webpack.config.js"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/duse/example/pc/src/environments/environment.ts",
+              "with": "apps/duse/example/pc/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "extractCss": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/webpack:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "duse-example-pc:build",
+        "port": 3000,
+        "hmr": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "duse-example-pc:build:development"
+        },
+        "production": {
+          "buildTarget": "duse-example-pc:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "fix": true,
+        "cache": true,
+        "lintFilePatterns": ["apps/duse/example/pc/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/duse/example/pc"],
+      "options": {
+        "jestConfig": "apps/duse/example/pc/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

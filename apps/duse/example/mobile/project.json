@@ -1,0 +1,81 @@
+{
+  "name": "duse-example-mobile",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/duse/example/mobile/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/duse/example/mobile",
+        "index": "apps/duse/example/mobile/src/index.html",
+        "baseHref": "/",
+        "main": "apps/duse/example/mobile/src/main.tsx",
+        "polyfills": "apps/duse/example/mobile/src/polyfills.ts",
+        "tsConfig": "apps/duse/example/mobile/tsconfig.app.json",
+        "assets": ["apps/duse/example/mobile/src/favicon.ico", "apps/duse/example/mobile/src/assets"],
+        "styles": ["apps/duse/example/mobile/src/styles.scss"],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/duse/example/mobile/src/environments/environment.ts",
+              "with": "apps/duse/example/mobile/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/webpack:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "duse-example-mobile:build",
+        "hmr": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "duse-example-mobile:build:development"
+        },
+        "production": {
+          "buildTarget": "duse-example-mobile:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/duse/example/mobile/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/duse/example/mobile"],
+      "options": {
+        "jestConfig": "apps/duse/example/mobile/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

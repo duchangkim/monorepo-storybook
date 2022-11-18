@@ -1,0 +1,24 @@
+{
+  "$schema": "../../../../../../../node_modules/nx/schemas/project-schema.json",
+  "name": "projects-duse-example-pc-ui-login-form",
+  "sourceRoot": "libs/projects/duse/example/pc/ui/login-form/src",
+  "projectType": "library",
+  "tags": ["type:ui"],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/projects/duse/example/pc/ui/login-form/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/projects/duse/example/pc/ui/login-form"],
+      "options": {
+        "jestConfig": "libs/projects/duse/example/pc/ui/login-form/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

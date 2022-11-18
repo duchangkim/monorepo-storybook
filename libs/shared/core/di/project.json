@@ -1,0 +1,26 @@
+{
+  "name": "shared-core-di",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shared/core/di/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "fix": true,
+        "cache": true,
+        "lintFilePatterns": ["libs/shared/core/di/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/shared/core/di"],
+      "options": {
+        "jestConfig": "libs/shared/core/di/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["core:di"]
+}

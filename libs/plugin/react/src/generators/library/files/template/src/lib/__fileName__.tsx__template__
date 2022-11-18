@@ -1,0 +1,10 @@
+import styles from './<%= fileName %>.scss';
+
+export const <%= fileName %> = function <%= fileName %>FunctionComponent() {
+  return (
+    <div className={styles['<%= cssClassName %>-wrapper']}>
+      <%= fileName %>
+    </div>
+  );
+};
+

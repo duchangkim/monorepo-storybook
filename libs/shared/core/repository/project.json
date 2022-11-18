@@ -1,0 +1,26 @@
+{
+  "name": "shared-core-repository",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shared/core/repository/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "fix": true,
+        "cache": true,
+        "lintFilePatterns": ["libs/shared/core/repository/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/shared/core/repository"],
+      "options": {
+        "jestConfig": "libs/shared/core/repository/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["core:repository"]
+}
