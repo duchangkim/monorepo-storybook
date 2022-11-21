@@ -17,6 +17,7 @@ jobs:
       - name: Echo env vars through context
         run: |
           echo "$GITHUB_CONTEXT"
+
       - name: Checkout source
         uses: actions/checkout@v3
         with:
@@ -44,7 +45,7 @@ jobs:
 
       - name: Install dependencies
         if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
-        run: npm ci
+        run: npm i
 
       - name: Publish duse-example-pc to Chromatic
         uses: chromaui/action@v1
