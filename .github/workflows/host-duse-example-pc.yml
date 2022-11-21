@@ -15,7 +15,6 @@ jobs:
   chromatic-deployment:
     runs-on: ubuntu-latest
     outputs:
-      affectedStorybookHosts: ${{ steps.getAffectedHost.outputs.affectedStorybookHosts }}
       executesDeployToChromatic: ${{ steps.getAffectedHost.outputs.executesDeployToChromatic }}
     steps:
       - name: Echo env vars through context
@@ -58,7 +57,7 @@ jobs:
       - name: Get affected storybook hosts
         id: getAffectedHost
         run: |
-          echo "affectedStorybookHosts=$(./node_modules/.bin/nx print-affected --target=build-storybook --select=projects --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }} )" >> $GITHUB_OUTPUT
+          affectedStorybookHosts=$(./node_modules/.bin/nx print-affected --target=build-storybook --select=projects --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }})
           if [[ $affectedStorybookHosts =~ "${{ env.STORYBOOK_HOST_PROJECT_NAME }}" ]]; then
             echo "executesDeployToChromatic=true" >> $GITHUB_OUTPUT
           else
