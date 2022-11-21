@@ -17,6 +17,7 @@
     "../src/**/*.stories.jsx",
     "../src/**/*.stories.tsx",
     "../src/**/*.stories.mdx",
-    "*.js"
+    "*.js",
+    "../../../projects/duse/example/mobile/**/**/src/lib/**/*.stories.@(js|jsx|ts|tsx|mdx)"
   ]
 }

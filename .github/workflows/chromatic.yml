@@ -1,0 +1,60 @@
+name: Chormatic
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  chromatic-deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo env vars through context
+        run: |
+          echo "$GITHUB_CONTEXT"
+      - name: Checkout source
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Compute cache key
+        id: set-cache-key
+        run: echo "node_modules_cache_key=${{ runner.os }}-build-${{ env.NODE_MODULES_CACHE_NAME }}-${{ hashFiles('**/package-lock.json') }}" >> $GITHUB_OUTPUT
+
+      - name: Cache node modules
+        id: cache-npm
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.NODE_MODULES_CACHE_PAHT }}
+          key: ${{ steps.set-cache-key.outputs.node_modules_cache_key }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.NODE_MODULES_CACHE_NAME }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Install dependencies
+        if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        run: npm ci
+
+      - name: Publish duse-example-pc to Chromatic
+        uses: chromaui/action@v1
+        with:
+          projectToken: ${{ secrets.CHROMATIC_DUSE_EXAMPLE_PC_TOKEN }}
+          workingDir: libs/storybook/host-duse-example-pc
+
+      - name: Publish duse-example-mobile to Chromatic
+        uses: chromaui/action@v1
+        with:
+          projectToken: ${{ secrets.CHROMATIC_DUSE_EXAMPLE_MOBILE_TOKEN }}
+          workingDir: libs/storybook/host-duse-example-mobile
+
+      - name: Publish host to Chromatic
+        uses: chromaui/action@v1
+        with:
+          projectToken: ${{ secrets.CHROMATIC_HOST_TOKEN }}
+          workingDir: libs/storybook/host
