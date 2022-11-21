@@ -6,7 +6,7 @@ export interface StorybookHostProps {}
 export function StorybookHost(props: StorybookHostProps) {
   return (
     <div className={styles['container']}>
-      <h1>Welcome to StorybookHost! HAHA!333333</h1>
+      <h1>Welcome to StorybookHost! HAHA!3333333</h1>
     </div>
   );
 }
