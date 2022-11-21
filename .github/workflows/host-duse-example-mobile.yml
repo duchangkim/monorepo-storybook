@@ -9,7 +9,8 @@ env:
   NODE_VERSION: 18.12.1
   NODE_MODULES_CACHE_PAHT: node_modules
   NODE_MODULES_CACHE_NAME: cache-node-modules
-  STORYBOOK_HOST_PROJECT_NAME: host-duse-example-mobile
+  STORYBOOK_HOST_PROJECT_NAME: storybook-host-duse-example-mobile
+  STORYBOOK_HOST_PROJECT_FOLDER_NAME: host-duse-example-mobile
 
 jobs:
   chromatic-deployment:
@@ -66,13 +67,17 @@ jobs:
           echo $affectedStorybookHosts
           echo $executesDeployToChromatic
 
+      - name: Build storybook-host-duse-example-mobile
+        if: ${{ steps.getAffectedHost.outputs.executesDeployToChromatic == 'true' }}
+        run: ./node_modules/.bin/nx ${{ env.STORYBOOK_HOST_PROJECT_NAME }}:build-storybook --configuration=ci
+
       - name: Publish duse-example-mobile to Chromatic
         if: ${{ steps.getAffectedHost.outputs.executesDeployToChromatic == 'true' }}
         uses: chromaui/action@v1
         with:
           projectToken: ${{ secrets.CHROMATIC_DUSE_EXAMPLE_MOBILE_TOKEN }}
-          workingDir: libs/storybook/${{ env.STORYBOOK_HOST_PROJECT_NAME }}
-          storybookBuildDir: dist/storybook/storybook-${{ env.STORYBOOK_HOST_PROJECT_NAME }}
+          workingDir: libs/storybook/${{ env.STORYBOOK_HOST_PROJECT_FOLDER_NAME }}
+          storybookBuildDir: dist/storybook/${{ env.STORYBOOK_HOST_PROJECT_NAME }}
 
       - name: Done task
         if: ${{ always() }}
