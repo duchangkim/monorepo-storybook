@@ -60,9 +60,9 @@ jobs:
         run: |
           echo "affectedStorybookHosts=$(./node_modules/.bin/nx print-affected --target=build-storybook --select=projects --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }} )" >> $GITHUB_OUTPUT
           if [[ $affectedStorybookHosts =~ "${{ env.STORYBOOK_HOST_PROJECT_NAME }}" ]]; then
-            echo "executesDeployToChromatic=false" >> $GITHUB_OUTPUT
-          else
             echo "executesDeployToChromatic=true" >> $GITHUB_OUTPUT
+          else
+            echo "executesDeployToChromatic=false" >> $GITHUB_OUTPUT
           fi
 
       - name: Publish duse-example-mobile to Chromatic
