@@ -63,7 +63,7 @@ jobs:
           else
             echo "executesDeployToChromatic=false" >> $GITHUB_OUTPUT
           fi
-          ehco $affectedStorybookHosts
+          echo $affectedStorybookHosts
           echo $executesDeployToChromatic
 
       - name: Publish duse-example-pc to Chromatic

@@ -58,7 +58,7 @@ jobs:
         id: getAffectedHost
         run: |
           affectedStorybookHosts=$(./node_modules/.bin/nx print-affected --target=build-storybook --select=projects --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }})
-          echo "executesDeployToChromatic=$(echo "$affectedStorybookHosts" | jq 'split(", ") | map(. == "storybook-host") | contains([true])')" >> $GITHUB_OUTPUT
+          echo "executesDeployToChromatic=$(echo '"$affectedStorybookHosts"'' | jq 'split(", ") | map(. == "storybook-host") | contains([true])')" >> $GITHUB_OUTPUT
           echo $affectedStorybookHosts
           echo $executesDeployToChromatic
 
