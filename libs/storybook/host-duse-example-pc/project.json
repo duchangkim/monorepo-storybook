@@ -4,6 +4,7 @@
   "sourceRoot": "libs/storybook/host-duse-example-pc/src",
   "projectType": "library",
   "tags": ["storybook"],
+  "implicitDependencies": ["projects-duse-example-pc-ui-sample", "projects-duse-example-pc-ui-sample-badge"],
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",
