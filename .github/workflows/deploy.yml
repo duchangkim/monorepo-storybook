@@ -28,6 +28,7 @@ jobs:
       matrix: ${{ steps.get-affected-apps.outputs.matrix }}
       node_modules_cache_key: ${{ steps.set-cache-key.outputs.node_modules_cache_key }}
       base: ${{ steps.set-SHA.outputs.base }}
+      head: ${{ steps.set-SHA.outputs.head }}
       executes_build_and_deploy: ${{ steps.get-affected-apps-string.outputs.executes_build_and_deploy }}
 
     steps:
@@ -71,7 +72,7 @@ jobs:
       - name: Get affected apps string
         id: get-affected-apps-string
         run: |
-          command_result=$(./node_modules/.bin/nx print-affected --type=app --select=projects)
+          command_result=$(./node_modules/.bin/nx print-affected --type=app --select=projects --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }})
           if [[ $command_result == "" ]]; then
             echo "executes_build_and_deploy=false" >> $GITHUB_OUTPUT 
             echo "affected_apps=false" >> $GITHUB_OUTPUT
@@ -128,7 +129,7 @@ jobs:
         run: npm ci
 
       - name: Building apps
-        run: npx nx affected --target=build --configuration=${{ env.BUILD_ENV }} --base=${{ needs.check-affected.outputs.base }}
+        run: npx nx affected --target=build --configuration=${{ env.BUILD_ENV }} --base=${{ needs.check-affected.outputs.base }} --head=${{ needs.check-affected.outputs.head }}
 
       - name: Saving build artifacts
         uses: actions/upload-artifact@v3
