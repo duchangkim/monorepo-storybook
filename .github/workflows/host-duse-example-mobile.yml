@@ -72,6 +72,7 @@ jobs:
         with:
           projectToken: ${{ secrets.CHROMATIC_DUSE_EXAMPLE_MOBILE_TOKEN }}
           workingDir: libs/storybook/${{ env.STORYBOOK_HOST_PROJECT_NAME }}
+          storybookBuildDir: dist/storybook/storybook-${{ env.STORYBOOK_HOST_PROJECT_NAME }}
 
       - name: Done task
         if: ${{ always() }}

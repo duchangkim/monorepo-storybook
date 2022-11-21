@@ -16,7 +16,7 @@
     "build:prod": "nx run-many --target=build --configuration=production",
     "graph": "nx graph",
     "bootstrap": "lerna bootstrap",
-    "build-storybook": "nx run-many --target=build-storybook",
+    "build-storybook": "nx affected --target=build-storybook --configuration=ci",
     "chromatic": "npx chromatic --project-token=d712a34106a1"
   },
   "devDependencies": {
