@@ -29,8 +29,8 @@
       "path": "apps/duse/example"
     },
     {
-      "name": "[lib] duse-example-pc",
-      "path": "libs/projects/duse/example/pc"
+      "name": "[lib] duse-example",
+      "path": "libs/projects/duse/example"
     }
   ],
   "settings": {

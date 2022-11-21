@@ -9,6 +9,7 @@
     "plugin-react-e2e": "apps/plugin/react-e2e",
     "plugin-workspace": "libs/plugin/workspace",
     "plugin-workspace-e2e": "apps/plugin/workspace-e2e",
+    "projects-duse-example-mobile-ui-text-field": "libs/projects/duse/example/mobile/ui/text-field",
     "projects-duse-example-pc-constant": "libs/projects/duse/example/pc/constant",
     "projects-duse-example-pc-features-auth": "libs/projects/duse/example/pc/features/auth",
     "projects-duse-example-pc-pages-login": "libs/projects/duse/example/pc/pages/login",
@@ -24,6 +25,9 @@
     "shared-features-auth": "libs/shared/features/auth",
     "shared-hook": "libs/shared/hook",
     "shared-type": "libs/shared/type",
-    "shared-util": "libs/shared/util"
+    "shared-util": "libs/shared/util",
+    "storybook-host": "libs/storybook/host",
+    "storybook-host-duse-example-mobile": "libs/storybook/host-duse-example-mobile",
+    "storybook-host-duse-example-pc": "libs/storybook/host-duse-example-pc"
   }
 }

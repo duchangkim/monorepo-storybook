@@ -1,14 +1,15 @@
 
- >  NX   Running target build-storybook for 1 project(s):
+ >  NX   Running target build-storybook for 2 project(s):
 
+    - duse-example-mobile
     - duse-example-pc
    
    With additional flags:
-     --output-dir=/var/folders/hz/lm57wtr97m7gkh1t369nqw1r0000gn/T/chromatic--66427-Ugg5Bze1IZyr
+     --output-dir=/var/folders/hz/lm57wtr97m7gkh1t369nqw1r0000gn/T/chromatic--83329-925ztZKRFTAy
 
  
 
-> nx run duse-example-pc:build-storybook --output-dir /var/folders/hz/lm57wtr97m7gkh1t369nqw1r0000gn/T/chromatic--66427-Ugg5Bze1IZyr
+> nx run duse-example-pc:build-storybook --output-dir /var/folders/hz/lm57wtr97m7gkh1t369nqw1r0000gn/T/chromatic--83329-925ztZKRFTAy
 
 
 >  NX  ui framework: @storybook/react
@@ -24,8 +25,24 @@
 >  NX  Storybook files available in dist/storybook/duse-example-pc
 
 
+> nx run duse-example-mobile:build-storybook --output-dir /var/folders/hz/lm57wtr97m7gkh1t369nqw1r0000gn/T/chromatic--83329-925ztZKRFTAy
+
+
+>  NX  ui framework: @storybook/react
+
+
+>  NX  Storybook builder starting ...
+
+=> Loading Nrwl React Storybook preset from "@nrwl/react/plugins/storybook"
+
+>  NX  Storybook builder finished ...
+
+
+>  NX  Storybook files available in dist/storybook/duse-example-mobile
+
+
  
 
- >  NX   Successfully ran target build-storybook for 1 projects
+ >  NX   Successfully ran target build-storybook for 2 projects
 
 

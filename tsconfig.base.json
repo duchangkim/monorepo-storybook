@@ -33,6 +33,9 @@
       "@duse/shared/service/local-storage-service": ["libs/shared/service/local-storage-service/src/index.ts"],
       "@duse/shared/type": ["libs/shared/type/src/index.ts"],
       "@duse/shared/util": ["libs/shared/util/src/index.ts"],
+      "@duse/storybook/host": ["libs/storybook/host/src/index.ts"],
+      "@duse/storybook/host-duse-example-mobile": ["libs/storybook/host-duse-example-mobile/src/index.ts"],
+      "@duse/storybook/host-duse-example-pc": ["libs/storybook/host-duse-example-pc/src/index.ts"],
       "@duse/workspace": ["libs/plugin/workspace/src/index.ts"]
     }
   },
