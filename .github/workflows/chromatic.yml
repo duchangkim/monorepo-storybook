@@ -5,6 +5,11 @@ on:
     branches:
       - main
 
+env:
+  NODE_VERSION: 18.12.1
+  NODE_MODULES_CACHE_PAHT: node_modules
+  NODE_MODULES_CACHE_NAME: cache-node-modules
+
 jobs:
   chromatic-deployment:
     runs-on: ubuntu-latest
