@@ -65,7 +65,7 @@ jobs:
 
       - name: Build storybook-host
         if: ${{ steps.getAffectedHost.outputs.executesDeployToChromatic == 'true' }}
-        run: ./node_modules/.bin/nx ${{ env.STORYBOOK_HOST_PROJECT_NAME }}:build-storybook --configuration=ci
+        run: ./node_modules/.bin/nx run ${{ env.STORYBOOK_HOST_PROJECT_NAME }}:build-storybook --configuration=ci
 
       - name: Publish duse-web host to Chromatic
         if: ${{ steps.getAffectedHost.outputs.executesDeployToChromatic == 'true' }}
