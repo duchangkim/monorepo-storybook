@@ -1,4 +1,4 @@
-name: Chormatic
+name: Deploy to duse-web host to chormatic
 
 on:
   push:
@@ -9,10 +9,14 @@ env:
   NODE_VERSION: 18.12.1
   NODE_MODULES_CACHE_PAHT: node_modules
   NODE_MODULES_CACHE_NAME: cache-node-modules
+  STORYBOOK_HOST_PROJECT_NAME: host
 
 jobs:
   chromatic-deployment:
     runs-on: ubuntu-latest
+    outputs:
+      affectedStorybookHosts: ${{ steps.getAffectedHost.outputs.affectedStorybookHosts }}
+      executesDeployToChromatic: ${{ steps.getAffectedHost.outputs.executesDeployToChromatic }}
     steps:
       - name: Echo env vars through context
         run: |
@@ -45,22 +49,25 @@ jobs:
 
       - name: Install dependencies
         if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
-        run: npm i
+        run: npm ci
 
-      - name: Publish duse-example-pc to Chromatic
-        uses: chromaui/action@v1
-        with:
-          projectToken: ${{ secrets.CHROMATIC_DUSE_EXAMPLE_PC_TOKEN }}
-          workingDir: libs/storybook/host-duse-example-pc
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        id: setSHA
+        uses: nrwl/nx-set-shas@v3
 
-      - name: Publish duse-example-mobile to Chromatic
-        uses: chromaui/action@v1
-        with:
-          projectToken: ${{ secrets.CHROMATIC_DUSE_EXAMPLE_MOBILE_TOKEN }}
-          workingDir: libs/storybook/host-duse-example-mobile
+      - name: Get affected storybook hosts
+        id: getAffectedHost
+        run: |
+          echo "affectedStorybookHosts=$(./node_modules/.bin/nx print-affected --target=build-storybook --select=projects --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }} )" >> $GITHUB_OUTPUT
+          echo "executesDeployToChromatic=$(echo "$affectedStorybookHosts" | jq 'split(", ") | map(. == "storybook-host") | contains([true])')" >> $GITHUB_OUTPUT
 
-      - name: Publish host to Chromatic
+      - name: Publish duse-web host to Chromatic
+        if: ${{ steps.getAffectedHost.outputs.executesDeployToChromatic == true }}
         uses: chromaui/action@v1
         with:
           projectToken: ${{ secrets.CHROMATIC_HOST_TOKEN }}
-          workingDir: libs/storybook/host
+          workingDir: libs/storybook/${{ env.STORYBOOK_HOST_PROJECT_NAME }}
+
+      - name: Done task
+        if: ${{ always() }}
+        run: echo "duse-web host 스토리북 크로마틱으로 배포 끝 🔚"

@@ -4,6 +4,7 @@
   "sourceRoot": "libs/storybook/host-duse-example-mobile/src",
   "projectType": "library",
   "tags": ["storybook"],
+  "implicitDependencies": ["projects-duse-example-mobile-ui-text-field"],
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",

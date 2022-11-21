@@ -1,0 +1,77 @@
+name: Deploy to duse-example-mobile to chormatic
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  NODE_VERSION: 18.12.1
+  NODE_MODULES_CACHE_PAHT: node_modules
+  NODE_MODULES_CACHE_NAME: cache-node-modules
+  STORYBOOK_HOST_PROJECT_NAME: host-duse-example-mobile
+
+jobs:
+  chromatic-deployment:
+    runs-on: ubuntu-latest
+    outputs:
+      affectedStorybookHosts: ${{ steps.getAffectedHost.outputs.affectedStorybookHosts }}
+      executesDeployToChromatic: ${{ steps.getAffectedHost.outputs.executesDeployToChromatic }}
+    steps:
+      - name: Echo env vars through context
+        run: |
+          echo "$GITHUB_CONTEXT"
+
+      - name: Checkout source
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Compute cache key
+        id: set-cache-key
+        run: echo "node_modules_cache_key=${{ runner.os }}-build-${{ env.NODE_MODULES_CACHE_NAME }}-${{ hashFiles('**/package-lock.json') }}" >> $GITHUB_OUTPUT
+
+      - name: Cache node modules
+        id: cache-npm
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.NODE_MODULES_CACHE_PAHT }}
+          key: ${{ steps.set-cache-key.outputs.node_modules_cache_key }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.NODE_MODULES_CACHE_NAME }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Install dependencies
+        if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        run: npm ci
+
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        id: setSHA
+        uses: nrwl/nx-set-shas@v3
+
+      - name: Get affected storybook hosts
+        id: getAffectedHost
+        run: |
+          echo "affectedStorybookHosts=$(./node_modules/.bin/nx print-affected --target=build-storybook --select=projects --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }} )" >> $GITHUB_OUTPUT
+          if [[ $affectedStorybookHosts =~ "${{ env.STORYBOOK_HOST_PROJECT_NAME }}" ]]; then
+            echo "executesDeployToChromatic=false" >> $GITHUB_OUTPUT
+          else
+            echo "executesDeployToChromatic=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Publish duse-example-mobile to Chromatic
+        if: ${{ steps.getAffectedHost.outputs.executesDeployToChromatic == true }}
+        uses: chromaui/action@v1
+        with:
+          projectToken: ${{ secrets.CHROMATIC_DUSE_EXAMPLE_MOBILE_TOKEN }}
+          workingDir: libs/storybook/${{ env.STORYBOOK_HOST_PROJECT_NAME }}
+
+      - name: Done task
+        if: ${{ always() }}
+        run: echo "duse-example-mobile 스토리북 크로마틱으로 배포 끝 🔚"
