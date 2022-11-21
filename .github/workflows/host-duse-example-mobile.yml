@@ -63,9 +63,11 @@ jobs:
           else
             echo "executesDeployToChromatic=false" >> $GITHUB_OUTPUT
           fi
+          ehco $affectedStorybookHosts
+          echo $executesDeployToChromatic
 
       - name: Publish duse-example-mobile to Chromatic
-        if: ${{ steps.getAffectedHost.outputs.executesDeployToChromatic == true }}
+        if: ${{ steps.getAffectedHost.outputs.executesDeployToChromatic == 'true' }}
         uses: chromaui/action@v1
         with:
           projectToken: ${{ secrets.CHROMATIC_DUSE_EXAMPLE_MOBILE_TOKEN }}

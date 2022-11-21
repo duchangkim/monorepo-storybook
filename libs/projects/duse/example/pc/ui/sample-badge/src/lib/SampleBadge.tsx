@@ -4,5 +4,5 @@ import styles from './SampleBadge.module.scss';
 export interface SampleBadgeProps {}
 
 export const SampleBadge = (props: SampleBadgeProps) => {
-  return <div className={styles['root']}>SampleBadge44</div>;
+  return <div className={styles['root']}>SampleBadge434</div>;
 };
