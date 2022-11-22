@@ -28,11 +28,11 @@ module.exports = {
     return {
       'duse-example-pc-stories': {
         title: 'duse-example-pc',
-        url: 'https://www.chromatic.com/library?appId=637b0d7b74cc9f8fcc7d3a17&branch=main',
+        url: 'https://main--637b0d7b74cc9f8fcc7d3a17.chromatic.com',
       },
       'duse-example-mobile-stories': {
         title: 'duse-example-mobile',
-        url: 'https://www.chromatic.com/library?appId=637b0dd35d50eba038ca4afb&branch=main',
+        url: 'https://main--637b0dd35d50eba038ca4afb.chromatic.com',
       },
     };
   },
