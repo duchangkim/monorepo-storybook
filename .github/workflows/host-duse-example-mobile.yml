@@ -76,7 +76,7 @@ jobs:
         uses: chromaui/action@v1
         with:
           projectToken: ${{ secrets.CHROMATIC_DUSE_EXAMPLE_MOBILE_TOKEN }}
-          workingDir: libs/storybook/${{ env.STORYBOOK_HOST_PROJECT_FOLDER_NAME }}
+          storybookBaseDir: libs/storybook/${{ env.STORYBOOK_HOST_PROJECT_FOLDER_NAME }}
           storybookBuildDir: dist/storybook/${{ env.STORYBOOK_HOST_PROJECT_NAME }}
           storybookConfigDir: libs/storybook/${{ env.STORYBOOK_HOST_PROJECT_FOLDER_NAME }}/.storybook
 
